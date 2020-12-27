@@ -1,4 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Layout from "../components/Layout/Layout";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -19,7 +21,9 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   );
