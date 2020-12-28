@@ -14,17 +14,18 @@ const Navbar = () => (
     bg="dark"
     variant="dark"
     expand="lg"
+    style={{ zIndex: 5 }}
   >
     <BContainer>
-      <BNavbar.Brand href="#home">GamesDB</BNavbar.Brand>
+      <BNavbar.Brand href="/">GamesDB</BNavbar.Brand>
       <BNavbar.Toggle aria-controls="basic-navbar-nav" />
       <BNavbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
+          <Nav.Link href="/">Home</Nav.Link>
           <NavDropdown title="Platform" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">PC</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">PlayStation</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Xbox</NavDropdown.Item>
+            <NavDropdown.Item href="/pc">PC</NavDropdown.Item>
+            <NavDropdown.Item href="/playstation">PlayStation</NavDropdown.Item>
+            <NavDropdown.Item href="/xbox">Xbox</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Nav>

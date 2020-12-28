@@ -23,6 +23,7 @@ const PrevArrow = ({ className, style, onClick }) => (
 );
 
 const Container = styled.div`
+  min-width: 0px !important;
   padding: 0px 25px;
   .slick-prev::before,
   .slick-next::before {

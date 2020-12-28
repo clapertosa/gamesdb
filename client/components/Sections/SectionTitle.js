@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 const Container = styled.div`
   font-weight: bold;
+  text-transform: uppercase;
 `;
 
 const SectionTitle = ({ children }) => (
   <>
-    <Container className="text-capitalize">{children}</Container>
+    <Container>{children}</Container>
     <hr className="mt-2 mb-3" />
   </>
 );

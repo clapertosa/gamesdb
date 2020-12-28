@@ -13,8 +13,23 @@
 		el.innerHTML = '<span style="font-family: \'icomoon\'">' + entity + '</span>' + html;
 	}
 	var icons = {
+		'icon-twitch': '&#xe90a;',
+		'icon-wikipedia': '&#xe900;',
+		'icon-reddit': '&#xe901;',
+		'icon-discord': '&#xe902;',
+		'icon-instagram': '&#xe903;',
+		'icon-twitter': '&#xe904;',
+		'icon-facebook': '&#xe905;',
+		'icon-youtube': '&#xe906;',
+		'icon-gog-dot-com': '&#xe907;',
+		'icon-epicgames': '&#xe908;',
+		'icon-steam': '&#xe909;',
+		'icon-clock-o': '&#xf017;',
 		'icon-chevron-left': '&#xf053;',
 		'icon-chevron-right': '&#xf054;',
+		'icon-check-circle': '&#xf058;',
+		'icon-globe': '&#xf0ac;',
+		'icon-gamepad': '&#xf11b;',
 		'0': 0
 		},
 		els = document.getElementsByTagName('*'),
