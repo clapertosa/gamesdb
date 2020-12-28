@@ -1,5 +1,5 @@
-import Head from "next/head";
+import HomeContainer from "../containers/HomeContainer";
 
-const Index = () => <div>home</div>;
+const Index = () => <HomeContainer />;
 
 export default Index;

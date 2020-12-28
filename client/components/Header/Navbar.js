@@ -33,7 +33,7 @@ const Navbar = () => (
             <Button variant="outline-success">Search</Button>
           </Form>
           <Nav.Link href="#home">Login/SignUp</Nav.Link>
-          <NavDropdown title="User" id="basic-nav-dropdown">
+          <NavDropdown title="User" id="basic-nav-dropdown" alignRight>
             <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.3">Logout</NavDropdown.Item>

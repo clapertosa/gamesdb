@@ -8,7 +8,9 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled(BContainer)`
-  height: calc(100% - 56px);
+  height: ${({ theme: { headerHeight, contentMarginTop } }) =>
+    `calc(100% - ${headerHeight + contentMarginTop}px)`};
+  margin-top: ${({ theme: { contentMarginTop } }) => `${contentMarginTop}px`};
 `;
 
 const Layout = ({ children }) => (
