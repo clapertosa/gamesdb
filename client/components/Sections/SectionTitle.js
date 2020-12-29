@@ -8,7 +8,7 @@ const Container = styled.div`
 const SectionTitle = ({ children }) => (
   <>
     <Container>{children}</Container>
-    <hr className="mt-2 mb-3" />
+    <hr className="mt-2 mb-3" style={{ width: "100%" }} />
   </>
 );
 

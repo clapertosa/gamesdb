@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import StarRatings from "react-star-ratings";
 import Carousel from "../../components/Carousel/Carousel";
+import CircularProgressBar from "../../components/CircularProgressBar/CircularProgressBar";
 import BackgroundImage from "../../components/Game/BackgroundImage";
 import PosterInfo from "../../components/Game/PosterInfo/PosterInfo";
 import TitleInfo from "../../components/Game/TitleInfo/TitleInfo";
@@ -23,29 +25,52 @@ const RowContainer = styled.div`
   }
 
   @media (min-width: 1024px) {
+    align-items: flex-start;
     flex-flow: row;
   }
 
-  .title {
+  .ratings {
+    margin-top: 25px;
+    width: 100%;
     @media (min-width: 1024px) {
-      margin-top: 80px;
+      margin-top: 235px;
     }
+  }
+
+  .star-ratings {
+    margin: auto;
   }
 `;
 
 const ColumnContainer = styled.div`
   display: flex;
   flex-flow: column;
+  flex: ${({ flex }) => flex || 1};
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-flow: column;
+  margin-top: 10px;
+  /* font-size: 14px; */
+  & > span:first-child {
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-right: 5px;
+  }
+
+  & > span:last-child {
+  }
 `;
 
 const Game = () => (
   <Wrapper>
     <BackgroundImage />
-    <RowContainer style={{ marginTop: 180 }}>
-      <ColumnContainer>
+    <RowContainer style={{ marginTop: 150 }}>
+      <ColumnContainer flex={3}>
         <PosterInfo />
       </ColumnContainer>
-      <ColumnContainer className="title">
+      <ColumnContainer className="title" flex={4}>
         <TitleInfo
           title="CyberPunk 2077"
           releaseDate={new Date()}
@@ -81,12 +106,51 @@ const Game = () => (
           ]}
         />
       </ColumnContainer>
-    </RowContainer>
-    <RowContainer>
-      <ColumnContainer style={{ alignSelf: "flex-start" }}>
-        <SectionTitle>Recommended</SectionTitle>
+      <ColumnContainer className="ratings" flex={3}>
+        <CircularProgressBar percentage={41} />
+        <span
+          style={{
+            fontSize: 14,
+            fontWeight: "bold",
+            marginTop: 10,
+            margin: "auto",
+          }}
+        >
+          How would you rate this game?
+        </span>
+        <StarRatings
+          rating={5}
+          starRatedColor="#ffe301"
+          starHoverColor="#ffe301"
+          starDimension="30px"
+          changeRating={(rating) => console.log(rating)}
+        />
+        <hr style={{ width: "100%" }} />
+        <InfoContainer>
+          <span className="text-capitalize">total ratings</span>
+          <span>10</span>
+        </InfoContainer>
+        <InfoContainer>
+          <span className="text-capitalize">Developers</span>
+          <span>CD Projekt</span>
+        </InfoContainer>
+        <InfoContainer>
+          <span className="text-capitalize">Publishers</span>
+          <span>CD Projekt</span>
+        </InfoContainer>
+        <InfoContainer>
+          <span className="text-capitalize">Game Modes</span>
+          <span>CD Projekt</span>
+        </InfoContainer>
+        <InfoContainer>
+          <span className="text-capitalize">Game Engine</span>
+          <span>CD Projekt</span>
+        </InfoContainer>
       </ColumnContainer>
+    </RowContainer>
+    <RowContainer style={{ marginTop: 20 }}>
       <ColumnContainer style={{ minWidth: "100%", minHeight: 0 }}>
+        <SectionTitle>Recommended</SectionTitle>
         <Carousel
           data={[
             {

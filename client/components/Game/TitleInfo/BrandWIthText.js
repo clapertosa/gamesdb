@@ -6,6 +6,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;
+  margin-bottom: ${({ withMarginBottom }) =>
+    withMarginBottom ? "10px" : "0px"};
 
   & > span:first-child {
     margin-right: 5px;
@@ -25,8 +27,12 @@ const getIconClassName = (brand) => {
   }
 };
 
-const BrandWithText = ({ brand, url }) => (
-  <Container className="col-4" onClick={() => console.log(url)}>
+const BrandWithText = ({ brand, url, withMarginBottom }) => (
+  <Container
+    className="col-4"
+    withMarginBottom={withMarginBottom}
+    onClick={() => console.log(url)}
+  >
     <span className={getIconClassName(brand)} />
     <span className="text-capitalize">{brand}</span>
   </Container>
@@ -35,6 +41,11 @@ const BrandWithText = ({ brand, url }) => (
 BrandWithText.propTypes = {
   brand: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  withMarginBottom: PropTypes.bool,
+};
+
+BrandWithText.defaultProps = {
+  withMarginBottom: false,
 };
 
 export default BrandWithText;

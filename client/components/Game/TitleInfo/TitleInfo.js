@@ -78,7 +78,7 @@ const TitleInfo = ({
     <hr className="mt-2 mb-3" />
     <PlatformsContainer>
       {externalLinks.map((d, i) => (
-        <BrandWithText key={i} brand={d.title} url={d.url} />
+        <BrandWithText key={i} brand={d.title} url={d.url} withMarginBottom />
       ))}
     </PlatformsContainer>
   </Container>

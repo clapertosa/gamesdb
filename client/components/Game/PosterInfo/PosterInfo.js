@@ -10,6 +10,7 @@ const Container = styled.div`
 const Poster = styled.img`
   width: 264px;
   height: 352px;
+  margin: auto;
   margin-bottom: 10px;
 `;
 
