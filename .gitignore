@@ -442,18 +442,18 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 # Client
-/.pnp
+WebUI/ClientApp/.pnp
 .pnp.js
 
 # testing
 /coverage
 
 # next.js
-client/.next/
-client/out/
+WebUI/ClientApp/.next/
+WebUI/ClientApp/client/out/
 
 # production
-client/build
+WebUI/ClientApp/build
 
 # misc
 *.pem
