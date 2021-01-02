@@ -7,10 +7,10 @@ namespace Domain.Entities
     {
         public Guid Id { get; set; }
         public string Avatar { get; set; }
-        public virtual ICollection<GameUser> Followings { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> Wanted { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> Playing { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> Played { get; set; } = new List<GameUser>();
+        public virtual ICollection<GameUser> GameFollowed { get; set; } = new List<GameUser>();
+        public virtual ICollection<GameUser> GameWanted { get; set; } = new List<GameUser>();
+        public virtual ICollection<GameUser> GamePlaying { get; set; } = new List<GameUser>();
+        public virtual ICollection<GameUser> GamePlayed { get; set; } = new List<GameUser>();
         public virtual ICollection<GameRankUser> Ranks { get; set; } = new List<GameRankUser>();
     }
 }
