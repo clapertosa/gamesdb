@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public partial class DbContext
+    public partial class ApplicationDbContext
     {
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<GameUser> Followings { get; set; }
