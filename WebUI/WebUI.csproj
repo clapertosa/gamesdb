@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
+    </ItemGroup>
+
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
       <UserSecretsId>8766fef7-1a85-4817-b712-838b3b48c760</UserSecretsId>
