@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class FollowingConfiguration : IEntityTypeConfiguration<GameUser>
+    public class GameFollowingConfiguration : IEntityTypeConfiguration<GameFollowing>
     {
-        public void Configure(EntityTypeBuilder<GameUser> builder)
+        public void Configure(EntityTypeBuilder<GameFollowing> builder)
         {
             builder.ToTable("Followings");
 

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class GameUser
+    public class GameFollowing
     {
         public Guid GameId { get; set; }
         public Guid ProfileId { get; set; }

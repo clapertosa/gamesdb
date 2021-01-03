@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class PlayingConfiguration:IEntityTypeConfiguration<GameUser>
+    public class GamePlayingConfiguration:IEntityTypeConfiguration<GamePlaying>
     {
-        public void Configure(EntityTypeBuilder<GameUser> builder)
+        public void Configure(EntityTypeBuilder<GamePlaying> builder)
         {
             builder.ToTable("Playing");
 

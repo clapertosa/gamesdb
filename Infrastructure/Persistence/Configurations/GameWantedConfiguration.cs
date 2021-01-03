@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class WantedConfiguration:IEntityTypeConfiguration<GameUser>
+    public class GameWantedConfiguration:IEntityTypeConfiguration<GameWanted>
     {
-        public void Configure(EntityTypeBuilder<GameUser> builder)
+        public void Configure(EntityTypeBuilder<GameWanted> builder)
         {
             builder.ToTable("Wanted");
             

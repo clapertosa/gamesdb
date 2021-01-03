@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class RanksConfiguration:IEntityTypeConfiguration<GameRankUser>
+    public class GameRankConfiguration:IEntityTypeConfiguration<GameRank>
     {
-        public void Configure(EntityTypeBuilder<GameRankUser> builder)
+        public void Configure(EntityTypeBuilder<GameRank> builder)
         {
             builder.ToTable("Ranks");
 

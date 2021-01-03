@@ -8,10 +8,10 @@ namespace Domain.Entities
         public Guid Id { get; set; }
         public int IgdbId { get; set; }
         public string Title { get; set; }
-        public virtual ICollection<GameUser> FollowedBy { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> WantedBy { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> PlayingBy { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameUser> PlayedBy { get; set; } = new List<GameUser>();
-        public virtual ICollection<GameRankUser> Ranks { get; set; } = new List<GameRankUser>();
+        public virtual ICollection<GameFollowing> FollowedBy { get; set; } = new List<GameFollowing>();
+        public virtual ICollection<GameWanted> WantedBy { get; set; } = new List<GameWanted>();
+        public virtual ICollection<GamePlaying> PlayingBy { get; set; } = new List<GamePlaying>();
+        public virtual ICollection<GamePlayed> PlayedBy { get; set; } = new List<GamePlayed>();
+        public virtual ICollection<GameRank> Ranks { get; set; } = new List<GameRank>();
     }
 }
