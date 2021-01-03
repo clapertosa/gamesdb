@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,10 +14,19 @@ namespace Infrastructure.Identity
         {
             _userManager = userManager;
         }
+        
 
-        public async Task<bool> CreateUserAsync()
+        public async Task<bool> CreateUserAsync(string username, string email, string password)
         {
-            throw new System.NotImplementedException();
+            AppUser user = await _userManager.FindByEmailAsync(email);
+            
+            // If user exists
+            if (user != null) throw new Exception("Email already in use.");
+            
+            // Create a new user
+            var result = await _userManager.CreateAsync(new AppUser {Email = email, UserName = username}, password);
+
+            return result.Succeeded;
         }
 
         public async Task<string> GetEmailAsync(string userId)

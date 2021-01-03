@@ -471,3 +471,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#DB
+games.db
+games.db-shm
+games.db-wal

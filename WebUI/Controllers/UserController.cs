@@ -1,21 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
 {
     public class UserController : BaseController
     {
-        private readonly IConfiguration _configuration;
+        private readonly IIdentityService _identityService;
 
-        public UserController(IConfiguration configuration)
+        public UserController(IIdentityService identityService)
         {
-            _configuration = configuration;
+            _identityService = identityService;
         }
-        
-        [HttpGet]
-        public string Index()
+
+        [HttpPost("signup")]
+        public async Task<bool> CreateUser([FromBody]SignUpUser user)
         {
-            return _configuration["IGDB_CLIENT_ID"];
+           return await  _identityService.CreateUserAsync(user.Email, user.UserName, user.Password);
         }
     }
 }
