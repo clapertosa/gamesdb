@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
+using Application.Errors;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity
 {
-    public class IdentityService:IIdentityService
+    public class IdentityService : IIdentityService
     {
         private readonly UserManager<AppUser> _userManager;
 
@@ -14,15 +15,14 @@ namespace Infrastructure.Identity
         {
             _userManager = userManager;
         }
-        
 
         public async Task<bool> CreateUserAsync(string username, string email, string password)
         {
             AppUser user = await _userManager.FindByEmailAsync(email);
-            
+
             // If user exists
-            if (user != null) throw new Exception("Email already in use.");
-            
+            if (user != null) throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
+
             // Create a new user
             var result = await _userManager.CreateAsync(new AppUser {Email = email, UserName = username}, password);
 
@@ -31,22 +31,22 @@ namespace Infrastructure.Identity
 
         public async Task<string> GetEmailAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<bool> EditUsernameAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<bool> EditEmailAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public async Task<bool> DeleteUserAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
