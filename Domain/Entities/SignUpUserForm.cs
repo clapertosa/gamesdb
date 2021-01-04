@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class SignUpUser
+    public class SignUpUserForm
     {
         public string Email { get; set; }
         public string UserName { get; set; }

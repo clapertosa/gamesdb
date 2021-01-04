@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Infrastructure.Identity;
 using Infrastructure.Persistence;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,10 +19,11 @@ namespace Infrastructure
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddIdentityCore<AppUser>().AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddUserManager<UserManager<AppUser>>();
+                .AddUserManager<UserManager<AppUser>>().AddSignInManager<SignInManager<AppUser>>();
 
             // Services Dependency Injection
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddScoped<IJwt, Jwt>();
         }
     }
 }

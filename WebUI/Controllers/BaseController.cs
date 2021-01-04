@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace WebUI.Controllers
 {
-    // [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public abstract class BaseController : ControllerBase

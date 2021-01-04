@@ -3,30 +3,57 @@ using System.Net;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Identity
 {
     public class IdentityService : IIdentityService
     {
+        private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly IJwt _jwt;
 
-        public IdentityService(UserManager<AppUser> userManager)
+        public IdentityService(IConfiguration configuration, UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager, IJwt jwt)
         {
+            _configuration = configuration;
             _userManager = userManager;
+            _signInManager = signInManager;
+            _jwt = jwt;
         }
 
-        public async Task<bool> CreateUserAsync(string username, string email, string password)
+        public async Task<bool> CreateUserAsync(SignUpUserForm form)
         {
-            AppUser user = await _userManager.FindByEmailAsync(email);
+            AppUser user = await _userManager.FindByEmailAsync(form.Email);
 
             // If user exists
             if (user != null) throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
 
             // Create a new user
-            var result = await _userManager.CreateAsync(new AppUser {Email = email, UserName = username}, password);
+            var result = await _userManager.CreateAsync(new AppUser {Email = form.Email, UserName = form.UserName},
+                form.Password);
 
             return result.Succeeded;
+        }
+
+        public async Task<User> SignIn(SignInUserForm form)
+        {
+            var user = await _userManager.FindByEmailAsync(form.Email);
+
+            if (user == null) throw new RestException(HttpStatusCode.Unauthorized);
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, form.Password, false);
+
+            if (result.Succeeded)
+            {
+                return new User
+                    {Email = user.Email, UserName = user.UserName, Token = _jwt.CreateToken(user.Id, user.UserName)};
+            }
+
+            throw new RestException(HttpStatusCode.Unauthorized);
         }
 
         public async Task<string> GetEmailAsync(string userId)

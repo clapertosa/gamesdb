@@ -1,10 +1,13 @@
 ﻿using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
     public interface IIdentityService
     {
-        public Task<bool> CreateUserAsync(string username, string email, string password);
+        public Task<bool> CreateUserAsync(SignUpUserForm form);
+
+        public Task<User> SignIn(SignInUserForm form);
 
         public Task<string> GetEmailAsync(string userId);
 

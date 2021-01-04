@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebUI.Controllers
@@ -14,10 +15,18 @@ namespace WebUI.Controllers
             _identityService = identityService;
         }
 
+        [AllowAnonymous]
         [HttpPost("signup")]
-        public async Task<bool> CreateUser([FromBody] SignUpUser user)
+        public async Task<bool> CreateUser([FromBody] SignUpUserForm form)
         {
-            return await _identityService.CreateUserAsync(user.Email, user.UserName, user.Password);
+            return await _identityService.CreateUserAsync(form);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("signin")]
+        public async Task<User> SignIn([FromBody] SignInUserForm form)
+        {
+            return await _identityService.SignIn(form);
         }
     }
 }

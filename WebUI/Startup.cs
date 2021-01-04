@@ -22,7 +22,7 @@ namespace WebUI
         {
             services.AddApplication();
             services.AddInfrastructure(_configuration);
-            services.AddControllers();
+            services.AddWebUI(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -35,6 +35,10 @@ namespace WebUI
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
