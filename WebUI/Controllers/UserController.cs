@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +15,9 @@ namespace WebUI.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<bool> CreateUser([FromBody]SignUpUser user)
+        public async Task<bool> CreateUser([FromBody] SignUpUser user)
         {
-           return await  _identityService.CreateUserAsync(user.Email, user.UserName, user.Password);
+            return await _identityService.CreateUserAsync(user.Email, user.UserName, user.Password);
         }
     }
 }
