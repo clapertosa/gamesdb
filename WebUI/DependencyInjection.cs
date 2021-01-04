@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using Application.Mediatr.User.Commands;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -17,6 +19,9 @@ namespace WebUI
             {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddFluentValidation(mvcConfiguration =>
+            {
+                mvcConfiguration.RegisterValidatorsFromAssembly(typeof(SignUpValidator).Assembly);
             });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

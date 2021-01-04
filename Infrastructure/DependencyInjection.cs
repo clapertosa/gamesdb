@@ -18,7 +18,15 @@ namespace Infrastructure
             {
                 options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentityCore<AppUser>().AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentityCore<AppUser>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequiredLength = 8;
+                }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<AppUser>>().AddSignInManager<SignInManager<AppUser>>();
 
             // Services Dependency Injection
