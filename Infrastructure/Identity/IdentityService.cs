@@ -33,7 +33,11 @@ namespace Infrastructure.Identity
             if (user != null) throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
 
             // Create a new user
-            var result = await _userManager.CreateAsync(new AppUser {Email = form.Email, UserName = form.UserName},
+            var result = await _userManager.CreateAsync(
+                new AppUser
+                {
+                    Email = form.Email, UserName = form.UserName, Profile = new Profile {Avatar = form.Avatar}
+                },
                 form.Password);
 
             return result.Succeeded;
