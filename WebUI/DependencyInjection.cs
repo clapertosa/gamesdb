@@ -13,7 +13,7 @@ namespace WebUI
 {
     public static class DependencyInjection
     {
-        public static void AddWebUI(this IServiceCollection services, IConfiguration configuration)
+        public static void AddWebUI(this IServiceCollection services, IConfiguration configuration, string corsPolicy)
         {
             services.AddControllers(options =>
             {
@@ -33,6 +33,10 @@ namespace WebUI
                     ValidateIssuer = false,
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(corsPolicy, builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader(); });
             });
         }
     }

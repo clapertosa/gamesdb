@@ -12,6 +12,7 @@ namespace WebUI
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly string CorsPolicy = "Cors Policy";
 
         public Startup(IConfiguration configuration)
         {
@@ -22,7 +23,7 @@ namespace WebUI
         {
             services.AddApplication();
             services.AddInfrastructure(_configuration);
-            services.AddWebUI(_configuration);
+            services.AddWebUI(_configuration, CorsPolicy);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +37,8 @@ namespace WebUI
 
             app.UseRouting();
 
+            app.UseCors(CorsPolicy);
+            
             app.UseAuthentication();
 
             app.UseAuthorization();
