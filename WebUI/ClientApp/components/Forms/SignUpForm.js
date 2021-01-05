@@ -1,15 +1,20 @@
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
+import { signUp } from "../../store/actions/signUpActions";
 import Avatar from "../Avatar/Avatar";
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string()
+  userName: Yup.string()
     .min(4, "Username must be between 4 and 16 characterss")
     .max(16, "Username must be between 4 and 16 characters")
     .required("Required"),
   email: Yup.string().email("Email not valid").required("Required"),
-  password: Yup.string().required("Required"),
+  password: Yup.string()
+    .required("Required")
+    .min(8, "Password must be between 8 and 16 characters")
+    .max(16, "Password must be between 8 and 16 characters"),
   confirmPassword: Yup.string()
     .test(
       "Password and confirm password are the same",
@@ -20,44 +25,49 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const {
     values,
     errors,
     touched,
+    setFieldValue,
     handleChange,
     handleBlur,
     handleSubmit,
   } = useFormik({
     initialValues: {
       avatar: "",
-      username: "",
+      userName: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(signUp(values));
     },
   });
 
   return (
     <Form style={{ marginTop: 20 }}>
       <Form.Group style={{ display: "flex", justifyContent: "center" }}>
-        <Avatar imagePath="" onClick={() => console.log("avatar")} />
+        <Avatar
+          imagePath=""
+          onImageChange={(value) => setFieldValue("avatar", value)}
+        />
       </Form.Group>
       <Form.Group>
         <Form.Label>Username</Form.Label>
         <Form.Control
-          name="username"
+          name="userName"
           type="username"
           placeholder="Enter username"
-          value={values.username}
+          value={values.userName}
           onBlur={handleBlur}
           onChange={handleChange}
         />
-        {errors.username && touched.username && (
-          <Form.Text className="text-danger">{errors.username}</Form.Text>
+        {errors.userName && touched.userName && (
+          <Form.Text className="text-danger">{errors.userName}</Form.Text>
         )}
       </Form.Group>
 
