@@ -37,6 +37,6 @@ export const signUp = ({ avatar, userName, email, password }) => async (
     });
     dispatch(signUpCompleted(res.data));
   } catch (e) {
-    dispatch(signUpFailed(e.response.data.message));
+    dispatch(signUpFailed(e?.response?.data?.message ?? "An error occurred"));
   }
 };

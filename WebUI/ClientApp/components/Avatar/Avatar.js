@@ -55,7 +55,7 @@ const Avatar = ({ imagePath, onImageChange }) => {
     const unit = 1024;
     const { files } = e.target;
     if (files[0].size / unit / unit > 1.5)
-      toast.error("Image too bing, max file size 1.5mb");
+      toast.error("Image too big, max file size 1.5mb");
     else
       toBase64(files[0]).then((res) => {
         setImage(URL.createObjectURL(files[0]));

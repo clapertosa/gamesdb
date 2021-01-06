@@ -64,7 +64,9 @@ const SignUpForm = () => {
           placeholder="Enter username"
           value={values.userName}
           onBlur={handleBlur}
-          onChange={handleChange}
+          onChange={({ target: { value } }) =>
+            setFieldValue("userName", value.toLowerCase())
+          }
         />
         {errors.userName && touched.userName && (
           <Form.Text className="text-danger">{errors.userName}</Form.Text>
