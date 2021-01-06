@@ -26,7 +26,7 @@ namespace WebUI.Controllers
         [HttpPost("signin")]
         public async Task<User> SignIn([FromBody] SignInUserForm form)
         {
-            return await _identityService.SignIn(form);
+            return await _identityService.SignInAsync(form);
         }
     }
 }

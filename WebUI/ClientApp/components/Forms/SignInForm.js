@@ -1,6 +1,8 @@
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
+import { signIn } from "../../store/actions/signInActions";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Email not valid").required("Required"),
@@ -8,6 +10,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
+
   const {
     values,
     errors,
@@ -19,7 +23,7 @@ const SignInForm = () => {
     initialValues: { email: "", password: "" },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(signIn(values));
     },
   });
 
@@ -54,7 +58,12 @@ const SignInForm = () => {
           <Form.Text className="text-danger">{errors.password}</Form.Text>
         )}
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={useSelector(({ signIn: { loading } }) => loading)}
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
     </Form>
