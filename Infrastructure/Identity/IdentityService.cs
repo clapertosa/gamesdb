@@ -30,7 +30,10 @@ namespace Infrastructure.Identity
             AppUser user = await _userManager.FindByEmailAsync(form.Email);
 
             // If user exists
-            if (user != null) throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
+            if (user.UserName == form.UserName.Trim().ToLower())
+                throw new RestException(HttpStatusCode.Conflict, new {message = "Username already in use."});
+            if (user.Email.ToLower() == form.Email.Trim().ToLower())
+                throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
 
             // Create a new user
             Guid userId = Guid.NewGuid();
