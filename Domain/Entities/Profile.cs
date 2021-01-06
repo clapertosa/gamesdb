@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Domain.Entities
@@ -6,6 +6,7 @@ namespace Domain.Entities
     public class Profile
     {
         public Guid Id { get; set; }
+        public Guid AppUserId { get; set; }
         public string Avatar { get; set; }
         public virtual ICollection<GameFollowing> GameFollowed { get; set; } = new List<GameFollowing>();
         public virtual ICollection<GameWanted> GameWanted { get; set; } = new List<GameWanted>();
