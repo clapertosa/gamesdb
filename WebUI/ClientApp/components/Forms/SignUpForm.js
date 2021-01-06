@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Button, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { signUp } from "../../store/actions/signUpActions";
 import Avatar from "../Avatar/Avatar";
@@ -26,6 +26,7 @@ const validationSchema = Yup.object().shape({
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+
   const {
     values,
     errors,
@@ -119,7 +120,12 @@ const SignUpForm = () => {
           </Form.Text>
         )}
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={useSelector(({ signUp: { loading } }) => loading)}
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
     </Form>
