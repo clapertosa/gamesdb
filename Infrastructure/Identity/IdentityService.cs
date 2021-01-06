@@ -50,11 +50,12 @@ namespace Infrastructure.Identity
             return result.Succeeded;
         }
 
-        public async Task<User> SignIn(SignInUserForm form)
+        public async Task<User> SignInAsync(SignInUserForm form)
         {
             var user = await _userManager.FindByEmailAsync(form.Email);
 
-            if (user == null) throw new RestException(HttpStatusCode.Unauthorized);
+            if (user == null)
+                throw new RestException(HttpStatusCode.Unauthorized, new {message = "Invalid UserName or Password"});
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, form.Password, false);
 
@@ -64,7 +65,7 @@ namespace Infrastructure.Identity
                     {Email = user.Email, UserName = user.UserName, Token = _jwt.CreateToken(user.Id, user.UserName)};
             }
 
-            throw new RestException(HttpStatusCode.Unauthorized);
+            throw new RestException(HttpStatusCode.Unauthorized, new {message = "Invalid UserName or Password"});
         }
 
         public async Task<string> GetEmailAsync(string userId)

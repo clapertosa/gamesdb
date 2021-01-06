@@ -7,7 +7,7 @@ namespace Application.Interfaces
     {
         public Task<bool> CreateUserAsync(SignUpUserForm form);
 
-        public Task<User> SignIn(SignInUserForm form);
+        public Task<User> SignInAsync(SignInUserForm form);
 
         public Task<string> GetEmailAsync(string userId);
 
