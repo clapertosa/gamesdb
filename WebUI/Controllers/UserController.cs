@@ -28,5 +28,11 @@ namespace WebUI.Controllers
         {
             return await _identityService.SignInAsync(form);
         }
+
+        [HttpGet("current_user")]
+        public async Task<User> GetCurrentUser()
+        {
+            return await _identityService.GetCurrentUserAsync();
+        }
     }
 }

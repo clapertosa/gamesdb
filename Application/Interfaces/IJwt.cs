@@ -2,6 +2,6 @@
 {
     public interface IJwt
     {
-        public string CreateToken(string userId, string username);
+        public string CreateToken(string username);
     }
 }

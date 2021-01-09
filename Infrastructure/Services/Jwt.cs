@@ -18,7 +18,7 @@ namespace Infrastructure.Services
             _configuration = configuration;
         }
 
-        public string CreateToken(string userId, string username)
+        public string CreateToken(string username)
         {
             var claims = new List<Claim>
             {
@@ -33,7 +33,7 @@ namespace Infrastructure.Services
                 Expires = DateTime.Now.AddMinutes(10),
                 SigningCredentials = creds
             };
-            
+
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

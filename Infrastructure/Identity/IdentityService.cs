@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
 using Domain.Entities;
+using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Identity
@@ -15,14 +20,19 @@ namespace Infrastructure.Identity
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwt _jwt;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ApplicationDbContext _dbContext;
 
         public IdentityService(IConfiguration configuration, UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager, IJwt jwt)
+            SignInManager<AppUser> signInManager, IJwt jwt, IHttpContextAccessor httpContextAccessor,
+            ApplicationDbContext dbContext)
         {
             _configuration = configuration;
             _userManager = userManager;
             _signInManager = signInManager;
             _jwt = jwt;
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
         }
 
         public async Task<bool> CreateUserAsync(SignUpUserForm form)
@@ -61,31 +71,30 @@ namespace Infrastructure.Identity
 
             if (result.Succeeded)
             {
+                Profile profile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
+
                 return new User
-                    {Email = user.Email, UserName = user.UserName, Token = _jwt.CreateToken(user.Id, user.UserName)};
+                {
+                    Avatar = profile.Avatar, Email = user.Email, UserName = user.UserName,
+                    Token = _jwt.CreateToken(user.UserName)
+                };
             }
 
             throw new RestException(HttpStatusCode.Unauthorized, new {message = "Invalid UserName or Password"});
         }
 
-        public async Task<string> GetEmailAsync(string userId)
+        public async Task<User> GetCurrentUserAsync()
         {
-            throw new NotImplementedException();
-        }
+            string userName = _httpContextAccessor.HttpContext?.User?.Claims?
+                .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            AppUser user = await _userManager.FindByNameAsync(userName);
+            Profile userProfile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
 
-        public async Task<bool> EditUsernameAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> EditEmailAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> DeleteUserAsync(string userId)
-        {
-            throw new NotImplementedException();
+            return new User
+            {
+                Avatar = userProfile.Avatar, Email = user.Email, UserName = user.UserName,
+                Token = _jwt.CreateToken(userName)
+            };
         }
     }
 }
