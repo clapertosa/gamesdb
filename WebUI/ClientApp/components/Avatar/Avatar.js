@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
@@ -51,6 +52,12 @@ const toBase64 = (file) =>
 
 const Avatar = ({ imagePath, onImageChange }) => {
   const [image, setImage] = useState(imagePath);
+
+  useEffect(() => {
+    onImageChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image]);
+
   const onChange = (e) => {
     const unit = 1024;
     const { files } = e.target;
@@ -93,11 +100,11 @@ const Avatar = ({ imagePath, onImageChange }) => {
 
 Avatar.propTypes = {
   imagePath: PropTypes.string,
-  onImageChange: PropTypes.func.isRequired,
+  onImageChange: PropTypes.func.isRequired
 };
 
 Avatar.defaultProps = {
-  imagePath: "",
+  imagePath: ""
 };
 
 export default Avatar;

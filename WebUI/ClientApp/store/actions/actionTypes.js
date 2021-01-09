@@ -1,5 +1,6 @@
 // USERS
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SIGN_OUT = "SIGN_OUT";
 
 // SIGN IN
 export const SIGN_IN_INIT = "SIGN_IN_INIT";

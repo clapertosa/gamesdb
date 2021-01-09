@@ -6,25 +6,24 @@ import { signIn } from "../../store/actions/signInActions";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Email not valid").required("Required"),
-  password: Yup.string().required("Required"),
+  password: Yup.string().required("Required")
 });
 
 const SignInForm = () => {
   const dispatch = useDispatch();
-
   const {
     values,
     errors,
     touched,
     handleChange,
     handleBlur,
-    handleSubmit,
+    handleSubmit
   } = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema,
     onSubmit: (values) => {
       dispatch(signIn(values));
-    },
+    }
   });
 
   return (

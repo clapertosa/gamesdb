@@ -1,14 +1,17 @@
 import { toast } from "react-toastify";
 import * as actionTypes from "./actionTypes";
 import axios from "../../axiosInstance";
+import { setCurrentUser } from "./userActions";
 
 const signInInit = () => ({ type: actionTypes.SIGN_IN_INIT });
 
-const signInCompleted = (payload) => {
+const signInCompleted = (payload) => (dispatch) => {
   toast.success("Logged in!"); // TODO: delete
+  localStorage.setItem("user", JSON.stringify(payload));
+  dispatch(setCurrentUser(payload));
   return {
     type: actionTypes.SIGN_IN_COMPLETED,
-    payload,
+    payload
   };
 };
 
@@ -16,7 +19,7 @@ const signInFailed = (payload) => {
   toast.error(payload);
   return {
     type: actionTypes.SIGN_IN_FAILED,
-    payload,
+    payload
   };
 };
 
@@ -26,7 +29,7 @@ export const signIn = ({ email, password }) => async (dispatch) => {
   try {
     res = await axios.post("/user/signin", {
       email,
-      password,
+      password
     });
     dispatch(signInCompleted(res.data));
   } catch (e) {

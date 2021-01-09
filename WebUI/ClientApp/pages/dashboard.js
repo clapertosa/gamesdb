@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Accordion, Card } from "react-bootstrap";
 import styled from "styled-components";
 
@@ -22,12 +23,18 @@ const AccordionHeader = styled.div`
 `;
 
 const Dashboard = () => {
+  const router = useRouter();
   const [actives, setActives] = useState({
     followed: 1,
     wanted: 1,
-    played: 1,
+    played: 1
   });
-  console.log(actives.followed);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) router.push("/");
+  }, [router]);
+
   return (
     <Container>
       <Accordion defaultActiveKey={1} activeKey={actives.followed}>
@@ -40,7 +47,7 @@ const Dashboard = () => {
               onClick={() =>
                 setActives((prev) => ({
                   ...prev,
-                  followed: prev.followed === 1 ? 0 : 1,
+                  followed: prev.followed === 1 ? 0 : 1
                 }))
               }
             >
@@ -66,7 +73,7 @@ const Dashboard = () => {
               onClick={() =>
                 setActives((prev) => ({
                   ...prev,
-                  wanted: prev.wanted === 1 ? 0 : 1,
+                  wanted: prev.wanted === 1 ? 0 : 1
                 }))
               }
             >
@@ -92,7 +99,7 @@ const Dashboard = () => {
               onClick={() =>
                 setActives((prev) => ({
                   ...prev,
-                  played: prev.played === 1 ? 0 : 1,
+                  played: prev.played === 1 ? 0 : 1
                 }))
               }
             >
