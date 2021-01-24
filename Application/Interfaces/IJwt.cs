@@ -1,7 +1,10 @@
-﻿namespace Application.Interfaces
+﻿using Infrastructure.Identity;
+
+namespace Application.Interfaces
 {
     public interface IJwt
     {
-        public string CreateToken(string username);
+        string CreateToken(string username);
+        RefreshToken GenerateRefreshToken();
     }
 }

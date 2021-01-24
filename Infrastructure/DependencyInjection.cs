@@ -32,6 +32,7 @@ namespace Infrastructure
             // Services Dependency Injection
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddScoped<IJwt, Jwt>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
         }
     }
 }

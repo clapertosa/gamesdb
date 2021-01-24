@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Domain.DTOs;
 using Domain.Entities;
 
 namespace Application.Interfaces
@@ -10,5 +11,6 @@ namespace Application.Interfaces
         public Task<User> SignInAsync(SignInUserForm form);
 
         public Task<User> GetCurrentUserAsync();
+        public Task<User> RefreshToken(string token);
     }
 }
