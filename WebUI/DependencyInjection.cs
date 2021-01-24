@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Application.Mediatr.User.Commands;
+﻿using Application.Mediatr.User.Commands;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 
 namespace WebUI
 {
@@ -31,12 +31,14 @@ namespace WebUI
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT_SECRET"])),
                     ValidateAudience = false,
                     ValidateIssuer = false,
+                    ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
             });
             services.AddCors(options =>
             {
-                options.AddPolicy(corsPolicy, builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader(); });
+                options.AddPolicy(corsPolicy,
+                    builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowCredentials(); });
             });
         }
     }
