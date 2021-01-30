@@ -23,7 +23,7 @@ namespace Infrastructure.Identity
         private readonly IUserAccessor _userAccessor;
 
         public IdentityService(IConfiguration configuration, UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager, IJwt jwt, ApplicationDbContext dbContext, IUserAccessor userAccessor)
+            SignInManager<AppUser> signInManager, IJwt jwt, ApplicationDbContext dbContext, IUserAccessor userAccessor )
         {
             _configuration = configuration;
             _userManager = userManager;

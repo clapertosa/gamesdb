@@ -20,34 +20,34 @@ namespace WebUI.Controllers
 
         [AllowAnonymous]
         [HttpPost("signup")]
-        public async Task<bool> CreateUser([FromBody] SignUpUserForm form)
+        public async Task<IActionResult> CreateUser([FromBody] SignUpUserForm form)
         {
-            return await _identityService.CreateUserAsync(form);
+            return Ok(await _identityService.CreateUserAsync(form));
         }
 
         [AllowAnonymous]
         [HttpPost("signin")]
-        public async Task<User> SignIn([FromBody] SignInUserForm form)
+        public async Task<IActionResult> SignIn([FromBody] SignInUserForm form)
         {
             User user = await _identityService.SignInAsync(form);
             SetTokenCookie(user.RefreshToken);
-            return user;
+            return Ok(user);
         }
 
         [HttpGet("current_user")]
-        public async Task<User> GetCurrentUser()
+        public async Task<IActionResult> GetCurrentUser()
         {
-            return await _identityService.GetCurrentUserAsync();
+            return Ok(await _identityService.GetCurrentUserAsync());
         }
 
         [AllowAnonymous]
         [HttpPost("refresh_token")]
-        public async Task<User> RefreshToken()
+        public async Task<IActionResult> RefreshToken()
         {
             string token = Request.Cookies["refreshToken"];
             User user = await _identityService.RefreshToken(token);
             SetTokenCookie(user.RefreshToken);
-            return user;
+            return Ok(user);
         }
 
         private void SetTokenCookie(string refreshToken)
