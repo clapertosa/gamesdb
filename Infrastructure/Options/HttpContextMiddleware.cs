@@ -46,7 +46,7 @@ namespace Infrastructure.Options
                         Encoding.UTF8.GetBytes($"{gdbResponse.TokenType} {gdbResponse.AccessToken}".Trim()),
                         new DistributedCacheEntryOptions
                         {
-                            AbsoluteExpiration = DateTimeOffset.Now.AddMilliseconds(gdbResponse.ExpiresIn)
+                            AbsoluteExpiration = DateTime.Now.AddSeconds(gdbResponse.ExpiresIn)
                         }, cancellationToken);
                     gdbToken = $"{gdbResponse.TokenType} {gdbResponse.AccessToken}".Trim();
                 }

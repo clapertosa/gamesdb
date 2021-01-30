@@ -42,8 +42,7 @@ namespace Infrastructure
             services.AddScoped<IGdb, Gdb>();
             services.AddHttpClient("OAUTH",
                 client => { client.BaseAddress = new Uri($"https://id.twitch.tv/oauth2/token"); });
-            services.AddHttpClient("GDB",
-                    client => { client.BaseAddress = new Uri("https://api.igdb.com/v4/"); })
+            services.AddHttpClient("GDB", client => { client.BaseAddress = new Uri("https://api.igdb.com/v4/"); })
                 .AddHttpMessageHandler<HttpContextMiddleware>();
         }
     }
