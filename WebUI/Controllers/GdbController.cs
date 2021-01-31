@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +16,11 @@ namespace WebUI.Controllers
             _gdb = gdb;
         }
 
-        [HttpPost("get_games")]
-        public async Task<IActionResult> GetGames()
+        [HttpPost("get_popular_games")]
+        public async Task<IActionResult> GetPopularGames()
         {
-            return Ok(await _gdb.GetGames());
+            
+            return Ok(await _gdb.GetPopularGames());
         }
     }
 }
