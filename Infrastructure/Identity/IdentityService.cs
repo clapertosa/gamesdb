@@ -23,7 +23,7 @@ namespace Infrastructure.Identity
         private readonly IUserAccessor _userAccessor;
 
         public IdentityService(IConfiguration configuration, UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager, IJwt jwt, ApplicationDbContext dbContext, IUserAccessor userAccessor )
+            SignInManager<AppUser> signInManager, IJwt jwt, ApplicationDbContext dbContext, IUserAccessor userAccessor)
         {
             _configuration = configuration;
             _userManager = userManager;
@@ -35,13 +35,15 @@ namespace Infrastructure.Identity
 
         public async Task<bool> CreateUserAsync(SignUpUserForm form)
         {
-            AppUser user = await _userManager.FindByEmailAsync(form.Email);
+            // Username exists
+            AppUser userUsername = await _userManager.FindByNameAsync(form.UserName);
+            if (userUsername != null && userUsername.UserName == form.UserName.Trim().ToLower())
+                throw new RestException(HttpStatusCode.Conflict, new {message = "Username already in use."});
 
-            // If user exists
-            if (user.UserName == form.UserName.Trim().ToLower())
-                throw new RestException(HttpStatusCode.Conflict, new { message = "Username already in use." });
-            if (user.Email.ToLower() == form.Email.Trim().ToLower())
-                throw new RestException(HttpStatusCode.Conflict, new { message = "Email already in use." });
+            // Email exists
+            AppUser userEmail = await _userManager.FindByEmailAsync(form.Email);
+            if (userEmail != null && userEmail.Email.ToLower() == form.Email.Trim().ToLower())
+                throw new RestException(HttpStatusCode.Conflict, new {message = "Email already in use."});
 
             // Create a new user
             Guid userId = Guid.NewGuid();
@@ -51,7 +53,7 @@ namespace Infrastructure.Identity
                     Id = userId.ToString(),
                     Email = form.Email,
                     UserName = form.UserName.Trim().ToLower(),
-                    Profile = new Profile { Avatar = form.Avatar, AppUserId = userId }
+                    Profile = new Profile {Avatar = form.Avatar, AppUserId = userId}
                 },
                 form.Password);
 
@@ -63,7 +65,7 @@ namespace Infrastructure.Identity
             var user = await _userManager.FindByEmailAsync(form.Email);
 
             if (user == null)
-                throw new RestException(HttpStatusCode.Unauthorized, new { message = "Invalid UserName or Password" });
+                throw new RestException(HttpStatusCode.Unauthorized, new {message = "Invalid UserName or Password"});
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, form.Password, false);
 
@@ -86,7 +88,7 @@ namespace Infrastructure.Identity
                 };
             }
 
-            throw new RestException(HttpStatusCode.Unauthorized, new { message = "Invalid UserName or Password" });
+            throw new RestException(HttpStatusCode.Unauthorized, new {message = "Invalid UserName or Password"});
         }
 
         public async Task<User> GetCurrentUserAsync()
