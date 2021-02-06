@@ -14,6 +14,10 @@ namespace Infrastructure.Services
     public class Gdb : IGdb
     {
         private const string ClientName = "GDB";
+
+        private const string QueryFields =
+            "f *, cover.*, genres.*, release_dates.*, involved_companies.company.*, platforms.*, game_modes.*, game_engines.*, similar_games.*, similar_games.cover.*, screenshots.*;";
+
         private readonly IHttpClientFactory _httpClientFactory;
 
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
@@ -29,7 +33,7 @@ namespace Infrastructure.Services
         public async Task<List<GdbGame>> GetPopularGames()
         {
             string query =
-                $"f *, cover.*, genres.*, release_dates.*;" +
+                $"{QueryFields}" +
                 $" where first_release_date > {DateTimeOffset.Now.AddMonths(-5).ToUnixTimeSeconds()} & rating >= 80 & total_rating_count >= 5;" +
                 $" sort popularity desc;" +
                 $" limit 20;";
@@ -49,7 +53,7 @@ namespace Infrastructure.Services
         public async Task<List<GdbGame>> GetTopRatedMonthGames()
         {
             string query =
-                $"f *, cover.*, genres.*, release_dates.*;" +
+                $"{QueryFields}" +
                 $" where first_release_date > {DateTimeOffset.Now.AddMonths(-1).ToUnixTimeSeconds()} & total_rating_count >= 5;" +
                 $" sort rating desc;" +
                 $" limit 20;";
@@ -69,7 +73,7 @@ namespace Infrastructure.Services
         public async Task<List<GdbGame>> GetBestEverGames()
         {
             string query =
-                $"f *, cover.*, genres.*, release_dates.*;" +
+                $"{QueryFields}" +
                 $" where total_rating_count >= 5 & rating > 80 & total_rating_count > 500;" +
                 $" sort popularity desc;" +
                 $" limit 20;";
@@ -84,6 +88,25 @@ namespace Infrastructure.Services
 
             List<GdbGame> games = JsonSerializer.Deserialize<List<GdbGame>>(resContentString, _options);
             return games;
+        }
+
+        public async Task<GdbGame> GetGame(int id)
+        {
+            string query =
+                $"{QueryFields}" +
+                $" where id = {id};";
+            HttpClient client = GetClient();
+            HttpResponseMessage res = await client.PostAsync("games", new StringContent(query));
+            string resContentString = await res.Content.ReadAsStringAsync();
+            if (!res.IsSuccessStatusCode)
+            {
+                throw new RestException(res.StatusCode,
+                    JsonSerializer.Deserialize<List<GdbError>>(resContentString, _options));
+            }
+
+            List<GdbGame> games = JsonSerializer.Deserialize<List<GdbGame>>(resContentString, _options);
+            if (games != null) return games[0];
+            throw new RestException(HttpStatusCode.NotFound, new {message = "Game not found."});
         }
     }
 }

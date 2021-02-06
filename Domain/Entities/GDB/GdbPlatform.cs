@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities.GDB
+﻿using System.Collections.Generic;
+
+namespace Domain.Entities.GDB
 {
-    public class GdbPlatforms
+    public class GdbPlatform
     {
         public int Id { get; set; } 
         public string Abbreviation { get; set; } 

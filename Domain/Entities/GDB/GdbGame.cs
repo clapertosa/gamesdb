@@ -13,18 +13,19 @@ namespace Domain.Entities.GDB
         public ICollection<int> ExternalGames { get; set; } 
         public int FirstReleaseDate { get; set; } 
         public int Follows { get; set; } 
-        public ICollection<int> GameModes { get; set; } 
+        public ICollection<GdbGameEngine> GameEngines { get; set; } 
+        public ICollection<GdbGameMode> GameModes { get; set; } 
         public ICollection<GdbGenre> Genres { get; set; } 
-        public ICollection<int> InvolvedCompanies { get; set; } 
+        public ICollection<GdbInvolvedCompanies> InvolvedCompanies { get; set; } 
         public ICollection<int> Keywords { get; set; } 
         public string Name { get; set; } 
-        public ICollection<int> Platforms { get; set; } 
+        public ICollection<GdbPlatform> Platforms { get; set; } 
         public ICollection<int> PlayerPerspectives { get; set; } 
         public double Rating { get; set; } 
         public int RatingCount { get; set; } 
         public ICollection<GdbReleaseDates> ReleaseDates { get; set; } 
-        public ICollection<int> Screenshots { get; set; } 
-        public ICollection<int> SimilarGames { get; set; } 
+        public ICollection<GdbScreenshot> Screenshots { get; set; } 
+        public ICollection<GdbSimilarGame> SimilarGames { get; set; } 
         public string Slug { get; set; } 
         public string Summary { get; set; } 
         public ICollection<int> Tags { get; set; } 

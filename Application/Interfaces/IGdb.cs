@@ -9,5 +9,6 @@ namespace Application.Interfaces
         public Task<List<GdbGame>> GetPopularGames();
         public Task<List<GdbGame>> GetTopRatedMonthGames();
         public Task<List<GdbGame>> GetBestEverGames();
+        public Task<GdbGame> GetGame(int id);
     }
 }

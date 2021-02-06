@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,19 +21,28 @@ namespace WebUI.Controllers
         {
             return Ok(await _gdb.GetPopularGames());
         }
-        
+
         [AllowAnonymous]
         [HttpPost("get_top_rated_month_games")]
         public async Task<IActionResult> GetTopRatedMonthGames()
         {
             return Ok(await _gdb.GetTopRatedMonthGames());
         }
-        
+
         [AllowAnonymous]
         [HttpPost("get_best_ever_games")]
         public async Task<IActionResult> GetBestEverGames()
         {
             return Ok(await _gdb.GetBestEverGames());
+        }
+
+        [AllowAnonymous]
+        [HttpPost("get_game")]
+        public async Task<IActionResult> GetGame()
+        {
+            using var reader = new StreamReader(Request.Body);
+            string id = await reader.ReadToEndAsync();
+            return Ok(await _gdb.GetGame(int.Parse(id)));
         }
     }
 }
