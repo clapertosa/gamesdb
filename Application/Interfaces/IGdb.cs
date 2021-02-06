@@ -7,5 +7,7 @@ namespace Application.Interfaces
     public interface IGdb
     {
         public Task<List<GdbGame>> GetPopularGames();
+        public Task<List<GdbGame>> GetTopRatedMonthGames();
+        public Task<List<GdbGame>> GetBestEverGames();
     }
 }

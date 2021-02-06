@@ -29,13 +29,57 @@ namespace Infrastructure.Services
         public async Task<List<GdbGame>> GetPopularGames()
         {
             string query =
-                $"f *; where release_dates.date > {DateTime.Now.AddMonths(-1).Millisecond} & rating >= 75; sort rating desc; limit 20;";
+                $"f *, cover.*, genres.*, release_dates.*;" +
+                $" where first_release_date > {DateTimeOffset.Now.AddMonths(-5).ToUnixTimeSeconds()} & rating >= 80 & total_rating_count >= 5;" +
+                $" sort popularity desc;" +
+                $" limit 20;";
             HttpClient client = GetClient();
             HttpResponseMessage res = await client.PostAsync("games", new StringContent(query));
             string resContentString = await res.Content.ReadAsStringAsync();
             if (!res.IsSuccessStatusCode)
             {
-                throw new RestException(res.StatusCode, JsonSerializer.Deserialize<List<GdbError>>(resContentString, _options));
+                throw new RestException(res.StatusCode,
+                    JsonSerializer.Deserialize<List<GdbError>>(resContentString, _options));
+            }
+
+            List<GdbGame> games = JsonSerializer.Deserialize<List<GdbGame>>(resContentString, _options);
+            return games;
+        }
+
+        public async Task<List<GdbGame>> GetTopRatedMonthGames()
+        {
+            string query =
+                $"f *, cover.*, genres.*, release_dates.*;" +
+                $" where first_release_date > {DateTimeOffset.Now.AddMonths(-1).ToUnixTimeSeconds()} & total_rating_count >= 5;" +
+                $" sort rating desc;" +
+                $" limit 20;";
+            HttpClient client = GetClient();
+            HttpResponseMessage res = await client.PostAsync("games", new StringContent(query));
+            string resContentString = await res.Content.ReadAsStringAsync();
+            if (!res.IsSuccessStatusCode)
+            {
+                throw new RestException(res.StatusCode,
+                    JsonSerializer.Deserialize<List<GdbError>>(resContentString, _options));
+            }
+
+            List<GdbGame> games = JsonSerializer.Deserialize<List<GdbGame>>(resContentString, _options);
+            return games;
+        }
+
+        public async Task<List<GdbGame>> GetBestEverGames()
+        {
+            string query =
+                $"f *, cover.*, genres.*, release_dates.*;" +
+                $" where total_rating_count >= 5 & rating > 80 & total_rating_count > 500;" +
+                $" sort popularity desc;" +
+                $" limit 20;";
+            HttpClient client = GetClient();
+            HttpResponseMessage res = await client.PostAsync("games", new StringContent(query));
+            string resContentString = await res.Content.ReadAsStringAsync();
+            if (!res.IsSuccessStatusCode)
+            {
+                throw new RestException(res.StatusCode,
+                    JsonSerializer.Deserialize<List<GdbError>>(resContentString, _options));
             }
 
             List<GdbGame> games = JsonSerializer.Deserialize<List<GdbGame>>(resContentString, _options);

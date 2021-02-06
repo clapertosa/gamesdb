@@ -8,13 +8,13 @@ namespace Domain.Entities.GDB
         public double AggregatedRating { get; set; } 
         public int AggregatedRatingCount { get; set; } 
         public int Category { get; set; } 
-        public int Cover { get; set; } 
+        public GdbCover Cover { get; set; } 
         public int CreatedAt { get; set; } 
         public ICollection<int> ExternalGames { get; set; } 
         public int FirstReleaseDate { get; set; } 
         public int Follows { get; set; } 
         public ICollection<int> GameModes { get; set; } 
-        public ICollection<int> Genres { get; set; } 
+        public ICollection<GdbGenre> Genres { get; set; } 
         public ICollection<int> InvolvedCompanies { get; set; } 
         public ICollection<int> Keywords { get; set; } 
         public string Name { get; set; } 
@@ -22,7 +22,7 @@ namespace Domain.Entities.GDB
         public ICollection<int> PlayerPerspectives { get; set; } 
         public double Rating { get; set; } 
         public int RatingCount { get; set; } 
-        public ICollection<int> ReleaseDates { get; set; } 
+        public ICollection<GdbReleaseDates> ReleaseDates { get; set; } 
         public ICollection<int> Screenshots { get; set; } 
         public ICollection<int> SimilarGames { get; set; } 
         public string Slug { get; set; } 
