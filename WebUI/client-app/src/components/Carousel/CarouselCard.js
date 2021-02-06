@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 const Container = styled(Card)`
   cursor: pointer;
   max-width: 205px;
-  max-height: 325px;
+  height: 570px;
   width: 100%;
   overflow: hidden;
   margin: auto;
@@ -17,6 +17,7 @@ const Container = styled(Card)`
     }
   }
   .card-img-top {
+    height: 270px;
     transition: transform 0.3s;
   }
 `;

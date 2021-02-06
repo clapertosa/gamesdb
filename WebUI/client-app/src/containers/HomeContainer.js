@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import styled from "styled-components/macro";
 import Carousel from "../components/Carousel/Carousel";
 import SectionTitle from "../components/Sections/SectionTitle";
+import { getBestGames } from "../store/actions/bestGamesActions";
+import { getPopularGames } from "../store/actions/popularGamesActions";
+import { getTopRatedMonthGames } from "../store/actions/topRatedMonthGamesActions";
 
 const Container = styled.div`
   & > div:not(:last-child) {
@@ -15,270 +19,58 @@ const Container = styled.div`
 
 const SectionContainer = styled.div``;
 
-const HomeContainer = () => (
-  <Container>
-    <SectionContainer>
-      <SectionTitle>popular games right now</SectionTitle>
-      <Carousel
-        data={[
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          }
-        ]}
-      />
-    </SectionContainer>
-    <SectionContainer>
-      <SectionTitle>top rated this month</SectionTitle>
-      <Carousel
-        data={[
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          }
-        ]}
-      />
-    </SectionContainer>
-    <SectionContainer>
-      <SectionTitle>best ever</SectionTitle>
-      <Carousel
-        data={[
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          },
-          {
-            title: "cyberpunk",
-            genre: "action",
-            imagePath:
-              "https://images.pexels.com/photos/747964/pexels-photo-747964.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-            overview:
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Incidunt error debitis voluptatibus ducimus minus veritatis inventore architecto assumenda expedita exercitationem ratione, iste aspernatur culpa, vel sint rerum molestias itaque quo."
-          }
-        ]}
-      />
-    </SectionContainer>
-  </Container>
-);
+const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
+  const dispatch = useDispatch();
 
-export default HomeContainer;
+  useEffect(() => {
+    dispatch(getPopularGames());
+    dispatch(getTopRatedMonthGames());
+    dispatch(getBestGames());
+  }, [dispatch]);
+
+  return (
+    <Container>
+      <SectionContainer>
+        <SectionTitle>popular games right now</SectionTitle>
+        <Carousel
+          data={popularGames.map((g) => ({
+            title: g.name,
+            genre: g.genres?.map((g) => g.name).join(", "),
+            imagePath: g.cover?.url?.replace("thumb", "cover_big"),
+            overview: g.summary
+          }))}
+        />
+      </SectionContainer>
+      <SectionContainer>
+        <SectionTitle>top rated this month</SectionTitle>
+        <Carousel
+          data={topRatedMonthGames.map((g) => ({
+            title: g.name,
+            genre: g.genres?.map((g) => g.name).join(", "),
+            imagePath: g.cover?.url?.replace("thumb", "cover_big"),
+            overview: g.summary
+          }))}
+        />
+      </SectionContainer>
+      <SectionContainer>
+        <SectionTitle>best ever</SectionTitle>
+        <Carousel
+          data={bestGames.map((g) => ({
+            title: g.name,
+            genre: g.genres?.map((g) => g.name).join(", "),
+            imagePath: g.cover?.url?.replace("thumb", "cover_big"),
+            overview: g.summary
+          }))}
+        />
+      </SectionContainer>
+    </Container>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  popularGames: state.popularGames.games,
+  topRatedMonthGames: state.topRatedMonthGames.games,
+  bestGames: state.bestGames.games
+});
+
+export default connect(mapStateToProps)(HomeContainer);

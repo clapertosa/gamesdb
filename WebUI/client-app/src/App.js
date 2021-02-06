@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "./styles/globals.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import Layout from "./components/Layout/Layout";
 import GlobalStyle from "./styles/GlobalStyle";
 import theme from "./styles/theme";
 import store from "./store/store";
