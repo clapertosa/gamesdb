@@ -13,6 +13,7 @@ const Title = styled.h1`
   font-size: 60px;
   font-weight: bold;
   color: limegreen;
+  white-space: nowrap;
 `;
 
 const InfoContainer = styled.div`
@@ -52,7 +53,7 @@ const TitleInfo = ({
     <span
       className="badge bg-primary text-wrap text-white"
       style={{
-        marginTop: 40,
+        marginTop: 105,
         marginRight: "auto",
         fontSize: 15,
         marginBottom: 20
@@ -66,12 +67,12 @@ const TitleInfo = ({
     </InfoContainer>
     <InfoContainer>
       <span>platforms:</span>
-      <span>{platforms.map((p) => p).join(", ")}</span>
+      <span>{platforms}</span>
     </InfoContainer>
     <InfoContainer style={{ marginTop: 20, marginBottom: 40 }}>
       <span style={{ fontWeight: "normal" }}>{overview}</span>
     </InfoContainer>
-    <PlatformsContainer>
+    {/* <PlatformsContainer>
       {distributions.map((d, i) => (
         <BrandWithText key={i} brand={d.title} url={d.url} />
       ))}
@@ -81,7 +82,7 @@ const TitleInfo = ({
       {externalLinks.map((d, i) => (
         <BrandWithText key={i} brand={d.title} url={d.url} withMarginBottom />
       ))}
-    </PlatformsContainer>
+    </PlatformsContainer> */}
   </Container>
 );
 
@@ -90,7 +91,7 @@ TitleInfo.propTypes = {
   releaseDate: PropTypes.instanceOf(Date),
   company: PropTypes.string,
   genre: PropTypes.string,
-  platforms: PropTypes.arrayOf(PropTypes.string),
+  platforms: PropTypes.string,
   overview: PropTypes.string,
   distributions: PropTypes.arrayOf(
     PropTypes.shape({ title: PropTypes.string, url: PropTypes.string })
@@ -104,7 +105,7 @@ TitleInfo.defaultProps = {
   releaseDate: null,
   company: "",
   genre: "",
-  platforms: [],
+  platforms: "",
   overview: "",
   distributions: [],
   externalLinks: []

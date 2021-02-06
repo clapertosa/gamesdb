@@ -77,6 +77,7 @@ const Carousel = ({ data }) => (
       {data.map((d, i) => (
         <div key={i}>
           <CarouselCard
+            id={d.id}
             imagePath={d.imagePath}
             title={d.title}
             genre={d.genre}

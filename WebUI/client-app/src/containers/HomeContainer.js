@@ -34,6 +34,7 @@ const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
         <SectionTitle>popular games right now</SectionTitle>
         <Carousel
           data={popularGames.map((g) => ({
+            id: g.id,
             title: g.name,
             genre: g.genres?.map((g) => g.name).join(", "),
             imagePath: g.cover?.url?.replace("thumb", "cover_big"),
@@ -45,6 +46,7 @@ const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
         <SectionTitle>top rated this month</SectionTitle>
         <Carousel
           data={topRatedMonthGames.map((g) => ({
+            id: g.id,
             title: g.name,
             genre: g.genres?.map((g) => g.name).join(", "),
             imagePath: g.cover?.url?.replace("thumb", "cover_big"),
@@ -56,6 +58,7 @@ const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
         <SectionTitle>best ever</SectionTitle>
         <Carousel
           data={bestGames.map((g) => ({
+            id: g.id,
             title: g.name,
             genre: g.genres?.map((g) => g.name).join(", "),
             imagePath: g.cover?.url?.replace("thumb", "cover_big"),

@@ -5,6 +5,7 @@ import userReducer from "./userReducer";
 import popularGamesReducer from "./popularGamesReducer";
 import topRatedMonthGamesReducer from "./topRatedMonthGamesReducer";
 import bestGamesReducer from "./bestGamesReducer";
+import gameReducer from "./gameReducer";
 
 export default combineReducers({
   signIn: signInReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   user: userReducer,
   popularGames: popularGamesReducer,
   topRatedMonthGames: topRatedMonthGamesReducer,
-  bestGames: bestGamesReducer
+  bestGames: bestGamesReducer,
+  game: gameReducer
 });
