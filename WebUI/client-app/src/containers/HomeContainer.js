@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import styled from "styled-components/macro";
 import Carousel from "../components/Carousel/Carousel";
 import SectionTitle from "../components/Sections/SectionTitle";
+import Spinner from "../components/Spinner/Spinner";
 import { getBestGames } from "../store/actions/bestGamesActions";
 import { getPopularGames } from "../store/actions/popularGamesActions";
 import { getTopRatedMonthGames } from "../store/actions/topRatedMonthGamesActions";
@@ -19,7 +20,12 @@ const Container = styled.div`
 
 const SectionContainer = styled.div``;
 
-const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
+const HomeContainer = ({
+  popularGames,
+  topRatedMonthGames,
+  bestGames,
+  loading
+}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +34,9 @@ const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
     dispatch(getBestGames());
   }, [dispatch]);
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Container>
       <SectionContainer>
         <SectionTitle>popular games right now</SectionTitle>
@@ -73,7 +81,11 @@ const HomeContainer = ({ popularGames, topRatedMonthGames, bestGames }) => {
 const mapStateToProps = (state) => ({
   popularGames: state.popularGames.games,
   topRatedMonthGames: state.topRatedMonthGames.games,
-  bestGames: state.bestGames.games
+  bestGames: state.bestGames.games,
+  loading:
+    state.popularGames.loading ||
+    state.topRatedMonthGames.loading ||
+    state.bestGames.loading
 });
 
 export default connect(mapStateToProps)(HomeContainer);

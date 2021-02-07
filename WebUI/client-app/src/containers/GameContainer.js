@@ -10,6 +10,7 @@ import PosterInfo from "../components/Game/PosterInfo/PosterInfo";
 import TitleInfo from "../components/Game/TitleInfo/TitleInfo";
 import SectionTitle from "../components/Sections/SectionTitle";
 import { getGame } from "../store/actions/gameActions";
+import Spinner from "../components/Spinner/Spinner";
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,15 +68,17 @@ const InfoContainer = styled.div`
   }
 `;
 
-const GameContainer = ({ game }) => {
+const GameContainer = ({ game, loading }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  console.log(game);
+
   useEffect(() => {
     dispatch(getGame(id));
   }, [dispatch, id]);
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Wrapper>
       <BackgroundImage
         imagePath={game?.screenshots?.[0]?.url?.replace("thumb", "1080p")}
@@ -131,10 +134,12 @@ const GameContainer = ({ game }) => {
               <span>{game?.involvedCompanies?.[0]?.company?.name}</span>
             </InfoContainer>
           )}
-          <InfoContainer>
-            <span className="text-capitalize">GameContainer Modes</span>
-            <span>{game?.gameModes?.map((g) => g.name).join(", ")}</span>
-          </InfoContainer>
+          {game?.gameModes?.length > 0 && (
+            <InfoContainer>
+              <span className="text-capitalize">GameContainer Modes</span>
+              <span>{game?.gameModes?.map((g) => g.name).join(", ")}</span>
+            </InfoContainer>
+          )}
           <InfoContainer>
             <span className="text-capitalize">GameContainer Engine</span>
             <span>{game?.gameEngines?.map((g) => g.name).join(", ")}</span>
@@ -162,7 +167,8 @@ const GameContainer = ({ game }) => {
 };
 
 const mapStateToProps = (state) => ({
-  game: state.game.game
+  game: state.game.game,
+  loading: state.game.loading
 });
 
 export default connect(mapStateToProps)(GameContainer);
