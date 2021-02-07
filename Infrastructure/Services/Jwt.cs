@@ -20,11 +20,12 @@ namespace Infrastructure.Services
             _configuration = configuration;
         }
 
-        public string CreateToken(string username)
+        public string CreateToken(string username, Guid profileId)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, username)
+                new Claim(JwtRegisteredClaimNames.NameId, username),
+                new Claim("profileId", profileId.ToString())
             };
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT_SECRET"]));
@@ -48,7 +49,7 @@ namespace Infrastructure.Services
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
-            return new RefreshToken { Token = Convert.ToBase64String(randomNumber) };
+            return new RefreshToken {Token = Convert.ToBase64String(randomNumber)};
         }
     }
 }

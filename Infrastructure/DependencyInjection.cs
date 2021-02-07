@@ -37,6 +37,7 @@ namespace Infrastructure
             // Services Dependency Injection
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddTransient<HttpContextMiddleware>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IJwt, Jwt>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IGdb, Gdb>();

@@ -83,7 +83,7 @@ namespace Infrastructure.Identity
                     Avatar = profile.Avatar,
                     Email = user.Email,
                     UserName = user.UserName,
-                    Token = _jwt.CreateToken(user.UserName),
+                    Token = _jwt.CreateToken(user.UserName, profile.Id),
                     RefreshToken = newRefreshToken.Token
                 };
             }
@@ -94,14 +94,14 @@ namespace Infrastructure.Identity
         public async Task<User> GetCurrentUserAsync()
         {
             AppUser user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
-            Profile userProfile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
+            Profile profile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
 
             return new User
             {
-                Avatar = userProfile.Avatar,
+                Avatar = profile.Avatar,
                 Email = user.Email,
                 UserName = user.UserName,
-                Token = _jwt.CreateToken(user.UserName)
+                Token = _jwt.CreateToken(user.UserName, profile.Id)
             };
         }
 
@@ -110,7 +110,7 @@ namespace Infrastructure.Identity
             RefreshToken oldToken = await _dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.Token == token);
             if (oldToken == null) throw new RestException(HttpStatusCode.Unauthorized);
             AppUser user = await _userManager.FindByIdAsync(oldToken.AppUserId);
-            Profile userProfile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
+            Profile profile = await _dbContext.Profiles.Where(x => x.Id == user.ProfileId).FirstOrDefaultAsync();
 
             if (oldToken != null && !oldToken.IsActive) throw new RestException(HttpStatusCode.Unauthorized);
 
@@ -124,10 +124,10 @@ namespace Infrastructure.Identity
 
             return new User
             {
-                Avatar = userProfile.Avatar,
+                Avatar = profile.Avatar,
                 UserName = user.UserName,
                 Email = user.Email,
-                Token = _jwt.CreateToken(user.UserName),
+                Token = _jwt.CreateToken(user.UserName, profile.Id),
                 RefreshToken = newRefreshToken.Token
             };
         }
