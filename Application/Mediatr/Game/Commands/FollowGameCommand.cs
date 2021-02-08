@@ -42,7 +42,10 @@ namespace Application.Mediatr.Game.Commands
             if (game == null)
             {
                 game = new Domain.Entities.Game
-                    {Id = Guid.NewGuid(), IgdbId = request.Game.Id, Title = request.Game.Name};
+                {
+                    Id = Guid.NewGuid(), IgdbId = request.Game.Id, Title = request.Game.Name,
+                    Description = request.Game.Summary, CoverPath = request.Game.Cover.Url
+                };
                 _dbContext.Games.Add(game);
             }
 
