@@ -100,8 +100,8 @@ const TitleInfo = ({
   );
 };
 TitleInfo.propTypes = {
-  title: PropTypes.string.isRequired,
-  releaseDate: PropTypes.instanceOf(Date),
+  title: PropTypes.string,
+  releaseDate: PropTypes.number,
   company: PropTypes.string,
   genre: PropTypes.string,
   platforms: PropTypes.string,
@@ -115,6 +115,7 @@ TitleInfo.propTypes = {
 };
 
 TitleInfo.defaultProps = {
+  title: "",
   releaseDate: null,
   company: "",
   genre: "",

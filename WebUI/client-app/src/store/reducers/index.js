@@ -6,6 +6,7 @@ import popularGamesReducer from "./popularGamesReducer";
 import topRatedMonthGamesReducer from "./topRatedMonthGamesReducer";
 import bestGamesReducer from "./bestGamesReducer";
 import gameReducer from "./gameReducer";
+import followGameReducer from "./followGameReducer";
 
 export default combineReducers({
   signIn: signInReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   popularGames: popularGamesReducer,
   topRatedMonthGames: topRatedMonthGamesReducer,
   bestGames: bestGamesReducer,
-  game: gameReducer
+  game: gameReducer,
+  followGame: followGameReducer
 });

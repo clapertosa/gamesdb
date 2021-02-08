@@ -1,6 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
+import { followGame } from "../../../store/actions/followGameActions";
 // import Stats from "./Stats";
 
 const Container = styled.div`
@@ -20,19 +23,39 @@ const Poster = styled.img`
 //   justify-content: space-between;
 // `;
 
-const PosterInfo = ({ posterPath, followers }) => (
-  <Container>
-    <Poster src={posterPath} />
-    <Button variant="info" style={{ marginBottom: 10 }}>
-      Follow
-    </Button>
-    <span className="text-muted text-center">Followers: {followers}</span>
-    {/* <RowContainer>
+const PosterInfo = ({ game, posterPath, followers, user, loading }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const onFollowClick = () => {
+    if (!user.isAuthenticated) history.push("sign_up");
+    dispatch(followGame(game));
+  };
+
+  return (
+    <Container>
+      <Poster src={posterPath} />
+      <Button
+        variant="info"
+        style={{ marginBottom: 10 }}
+        disabled={loading}
+        onClick={onFollowClick}
+      >
+        Follow
+      </Button>
+      <span className="text-muted text-center">Followers: {followers}</span>
+      {/* <RowContainer>
       <Stats icon="icon-clock-o" title="want" stats={123} />
       <Stats icon="icon-gamepad" title="playing" stats={123} />
       <Stats icon="icon-check-circle" title="played" stats={123} />
     </RowContainer> */}
-  </Container>
-);
+    </Container>
+  );
+};
 
-export default PosterInfo;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  loading: state.followGame.loading
+});
+
+export default connect(mapStateToProps)(PosterInfo);

@@ -86,6 +86,7 @@ const GameContainer = ({ game, loading }) => {
       <RowContainer style={{ marginTop: 150 }}>
         <ColumnContainer flex={3}>
           <PosterInfo
+            game={game}
             posterPath={game?.cover?.url?.replace("thumb", "720p")}
             followers={game?.follows}
           />
