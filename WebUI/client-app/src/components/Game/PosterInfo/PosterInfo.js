@@ -27,7 +27,7 @@ const Poster = styled.img`
 const PosterInfo = ({ game, stats, posterPath, followers, user, loading }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log(stats);
+
   const onFollowClick = () => {
     if (!user.isAuthenticated) history.push("/sign");
     if (!stats?.isFollowing) dispatch(followGame(game?.game));

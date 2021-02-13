@@ -12,6 +12,7 @@ import SectionTitle from "../components/Sections/SectionTitle";
 import { getGame } from "../store/actions/gameActions";
 import Spinner from "../components/Spinner/Spinner";
 import { getGameStats } from "../store/actions/gameStatsActions";
+import { voteGame } from "../store/actions/voteGameActions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,7 +70,7 @@ const InfoContainer = styled.div`
   }
 `;
 
-const GameContainer = ({ game, stats, loading, isAuthenticated }) => {
+const GameContainer = ({ game, stats, vote, loading, isAuthenticated }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -117,11 +118,14 @@ const GameContainer = ({ game, stats, loading, isAuthenticated }) => {
             How would you rate this game?
           </span>
           <StarRatings
-            rating={5}
+            rating={stats.vote ?? 0}
             starRatedColor="#ffe301"
             starHoverColor="#ffe301"
             starDimension="30px"
-            changeRating={(rating) => console.log(rating)}
+            changeRating={(value) => {
+              if (!vote.loading)
+                dispatch(voteGame({ game: game.game, vote: value }));
+            }}
           />
           <hr style={{ width: "100%" }} />
           <InfoContainer>
@@ -176,6 +180,7 @@ const GameContainer = ({ game, stats, loading, isAuthenticated }) => {
 const mapStateToProps = (state) => ({
   game: state.game,
   stats: state.gameStats,
+  vote: state.voteGame,
   loading: state.game.loading,
   isAuthenticated: state.user.isAuthenticated
 });

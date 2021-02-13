@@ -1,10 +1,14 @@
+import { toast } from "react-toastify";
 import * as actionTypes from "./actionTypes";
 import axios from "../../axiosInstance";
 import { getGameStats } from "./gameStatsActions";
 
 const unfollowGameInit = () => ({ type: actionTypes.UNFOLLOW_GAME_INIT });
 
-const unfollowGameSuccess = () => ({ type: actionTypes.UNFOLLOW_GAME_SUCCESS });
+const unfollowGameSuccess = () => {
+  toast.success("Game unfollowed");
+  return { type: actionTypes.UNFOLLOW_GAME_SUCCESS };
+};
 
 const unfollowGameFailed = (data) => ({
   type: actionTypes.UNFOLLOW_GAME_FAILED,
