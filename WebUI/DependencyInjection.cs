@@ -1,13 +1,13 @@
-﻿using FluentValidation.AspNetCore;
+﻿using System;
+using System.Text;
+using Application.Mediatr.User.Commands;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
-using Application.Mediatr.User.Commands;
 
 namespace WebUI
 {
@@ -38,7 +38,7 @@ namespace WebUI
             services.AddCors(options =>
             {
                 options.AddPolicy(corsPolicy,
-                    builder => { builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowCredentials(); });
+                    builder => { builder.WithOrigins(configuration["FE_URL"]).AllowAnyHeader().AllowCredentials(); });
             });
         }
     }

@@ -18,8 +18,9 @@ namespace Infrastructure
             // Database and Identity config
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(configuration["POSTGRESQL_URI"]);
             });
+            
             services.AddIdentityCore<AppUser>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
@@ -32,7 +33,7 @@ namespace Infrastructure
                 .AddUserManager<UserManager<AppUser>>().AddSignInManager<SignInManager<AppUser>>();
 
             // Redis
-            services.AddStackExchangeRedisCache(options => { options.Configuration = "localhost:6379"; });
+            services.AddStackExchangeRedisCache(options => { options.Configuration = configuration["REDIS_URI"]; });
 
             // Services Dependency Injection
             services.AddTransient<IIdentityService, IdentityService>();
