@@ -37,7 +37,8 @@ namespace Application.Mediatr.Game.Commands
                 throw new RestException(HttpStatusCode.Forbidden, new {message = "Not authorized."});
             }
 
-            Domain.Entities.Game game = await _dbContext.Games.FirstOrDefaultAsync(x => x.IgdbId == request.Game.Id, cancellationToken: cancellationToken);
+            Domain.Entities.Game game = await _dbContext.Games.FirstOrDefaultAsync(x => x.IgdbId == request.Game.Id,
+                cancellationToken);
 
             if (game == null)
             {
@@ -50,7 +51,7 @@ namespace Application.Mediatr.Game.Commands
             }
 
             bool alreadyFollowing = await _dbContext.Followings.FirstOrDefaultAsync(x =>
-                x.GameId == game.Id && x.ProfileId == new Guid(currentProfileId),  cancellationToken) != null;
+                x.GameId == game.Id && x.ProfileId == new Guid(currentProfileId), cancellationToken) != null;
 
             if (alreadyFollowing)
                 throw new RestException(HttpStatusCode.Conflict, new {message = $"Already following {game.Title}."});

@@ -21,6 +21,12 @@ namespace WebUI.Controllers
             return await Mediator.Send(command);
         }
 
+        [HttpPost("vote")]
+        public async Task<ActionResult<Unit>> Vote(VoteGameCommand command)
+        {
+            return await Mediator.Send(command);
+        }
+
         [HttpPost("get_game_stats")]
         public async Task<GameStats> GetGameStats(GameStatsQuery query)
         {
