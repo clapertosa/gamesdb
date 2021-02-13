@@ -21,11 +21,12 @@ const getGameFailed = (payload) => {
 
 export const getGame = (id) => async (dispatch) => {
   dispatch(getGameInit());
-  let res;
+
   try {
-    res = await axios.post("/gdb/get_game", id);
-    dispatch(getGameCompleted(res.data));
+    const gameRes = await axios.post("/gdb/get_game", id);
+    dispatch(getGameCompleted({ game: gameRes.data }));
   } catch (e) {
     dispatch(getGameFailed(e?.response?.data?.message ?? "An error occurred"));
+    window.location.href = "/";
   }
 };

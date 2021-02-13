@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../axiosInstance";
+import { getGameStats } from "./gameStatsActions";
 
 const followGameInit = () => ({ type: actionTypes.FOLLOW_GAME_INIT });
 
@@ -15,6 +16,7 @@ export const followGame = (game) => async (dispatch) => {
   try {
     await axios.post("game/follow", { game });
     dispatch(followGameSuccess());
+    dispatch(getGameStats(game.id));
   } catch (e) {
     dispatch(
       followGameFailed(e?.response?.data?.message ?? "An error occurred")

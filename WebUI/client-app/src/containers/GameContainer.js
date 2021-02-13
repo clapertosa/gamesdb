@@ -11,6 +11,7 @@ import TitleInfo from "../components/Game/TitleInfo/TitleInfo";
 import SectionTitle from "../components/Sections/SectionTitle";
 import { getGame } from "../store/actions/gameActions";
 import Spinner from "../components/Spinner/Spinner";
+import { getGameStats } from "../store/actions/gameStatsActions";
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,41 +69,43 @@ const InfoContainer = styled.div`
   }
 `;
 
-const GameContainer = ({ game, loading }) => {
+const GameContainer = ({ game, stats, loading, isAuthenticated }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(getGame(id));
-  }, [dispatch, id]);
+    dispatch(getGameStats(id));
+  }, [dispatch, id, isAuthenticated]);
 
   return loading ? (
     <Spinner />
   ) : (
     <Wrapper>
       <BackgroundImage
-        imagePath={game?.screenshots?.[0]?.url?.replace("thumb", "1080p")}
+        imagePath={game?.game?.screenshots?.[0]?.url?.replace("thumb", "1080p")}
       />
       <RowContainer style={{ marginTop: 150 }}>
         <ColumnContainer flex={3}>
           <PosterInfo
             game={game}
-            posterPath={game?.cover?.url?.replace("thumb", "720p")}
-            followers={game?.follows}
+            stats={stats}
+            posterPath={game?.game?.cover?.url?.replace("thumb", "720p")}
+            followers={game?.game?.follows}
           />
         </ColumnContainer>
         <ColumnContainer className="title" flex={4}>
           <TitleInfo
-            title={game?.name}
-            releaseDate={game?.firstReleaseDate * 1000}
-            company={game?.involvedCompanies?.[0]?.company?.name}
-            genre={game?.genres?.map((g) => g.name).join(", ")}
-            platforms={game?.platforms?.map((p) => p.name).join(", ")}
-            overview={game?.summary}
+            title={game?.game?.name}
+            releaseDate={game?.game?.firstReleaseDate * 1000}
+            company={game?.game?.involvedCompanies?.[0]?.company?.name}
+            genre={game?.game?.genres?.map((g) => g.name).join(", ")}
+            platforms={game?.game?.platforms?.map((p) => p.name).join(", ")}
+            overview={game?.game?.summary}
           />
         </ColumnContainer>
         <ColumnContainer className="ratings" flex={3}>
-          <CircularProgressBar percentage={Math.floor(game?.rating)} />
+          <CircularProgressBar percentage={Math.floor(game?.game?.rating)} />
           <span
             style={{
               fontSize: 14,
@@ -123,27 +126,31 @@ const GameContainer = ({ game, loading }) => {
           <hr style={{ width: "100%" }} />
           <InfoContainer>
             <span className="text-capitalize">total ratings</span>
-            <span>{game?.ratingCount}</span>
+            <span>{game?.game?.ratingCount}</span>
           </InfoContainer>
           <InfoContainer>
             <span className="text-capitalize">Developers</span>
-            <span>{game?.involvedCompanies?.[0]?.company?.name}</span>
+            <span>{game?.game?.involvedCompanies?.[0]?.company?.name}</span>
           </InfoContainer>
-          {game?.involvedCompanies?.[0]?.publisher && (
+          {game?.game?.involvedCompanies?.[0]?.publisher && (
             <InfoContainer>
               <span className="text-capitalize">Publishers</span>
-              <span>{game?.involvedCompanies?.[0]?.company?.name}</span>
+              <span>{game?.game?.involvedCompanies?.[0]?.company?.name}</span>
             </InfoContainer>
           )}
-          {game?.gameModes?.length > 0 && (
+          {game?.game?.gameModes?.length > 0 && (
             <InfoContainer>
               <span className="text-capitalize">GameContainer Modes</span>
-              <span>{game?.gameModes?.map((g) => g.name).join(", ")}</span>
+              <span>
+                {game?.game?.gameModes?.map((g) => g.name).join(", ")}
+              </span>
             </InfoContainer>
           )}
           <InfoContainer>
             <span className="text-capitalize">GameContainer Engine</span>
-            <span>{game?.gameEngines?.map((g) => g.name).join(", ")}</span>
+            <span>
+              {game?.game?.gameEngines?.map((g) => g.name).join(", ")}
+            </span>
           </InfoContainer>
         </ColumnContainer>
       </RowContainer>
@@ -152,7 +159,7 @@ const GameContainer = ({ game, loading }) => {
           <SectionTitle>Recommended</SectionTitle>
           <Carousel
             data={
-              game?.similarGames?.map((g) => ({
+              game?.game?.similarGames?.map((g) => ({
                 id: g.id,
                 title: g.name,
                 genre: g.genres?.map((g) => g.name).join(", "),
@@ -166,10 +173,11 @@ const GameContainer = ({ game, loading }) => {
     </Wrapper>
   );
 };
-
 const mapStateToProps = (state) => ({
-  game: state.game.game,
-  loading: state.game.loading
+  game: state.game,
+  stats: state.gameStats,
+  loading: state.game.loading,
+  isAuthenticated: state.user.isAuthenticated
 });
 
 export default connect(mapStateToProps)(GameContainer);

@@ -4,6 +4,7 @@ import { connect, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
 import { followGame } from "../../../store/actions/followGameActions";
+import { unfollowGame } from "../../../store/actions/unfollowGameActions";
 // import Stats from "./Stats";
 
 const Container = styled.div`
@@ -23,13 +24,14 @@ const Poster = styled.img`
 //   justify-content: space-between;
 // `;
 
-const PosterInfo = ({ game, posterPath, followers, user, loading }) => {
+const PosterInfo = ({ game, stats, posterPath, followers, user, loading }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-
+  console.log(stats);
   const onFollowClick = () => {
-    if (!user.isAuthenticated) history.push("sign_up");
-    dispatch(followGame(game));
+    if (!user.isAuthenticated) history.push("/sign");
+    if (!stats?.isFollowing) dispatch(followGame(game?.game));
+    else dispatch(unfollowGame(game?.game));
   };
 
   return (
@@ -41,9 +43,12 @@ const PosterInfo = ({ game, posterPath, followers, user, loading }) => {
         disabled={loading}
         onClick={onFollowClick}
       >
-        Follow
+        {stats?.isFollowing ? "Unfollow" : "Follow"}
       </Button>
-      <span className="text-muted text-center">Followers: {followers}</span>
+      <span className="text-muted text-center">
+        Followers:{" "}
+        {stats?.totalFollowers ? followers + stats?.totalFollowers : followers}
+      </span>
       {/* <RowContainer>
       <Stats icon="icon-clock-o" title="want" stats={123} />
       <Stats icon="icon-gamepad" title="playing" stats={123} />

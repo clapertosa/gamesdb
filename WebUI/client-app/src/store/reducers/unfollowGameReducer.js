@@ -1,7 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  game: null,
   loading: false,
   success: null,
   error: null
@@ -9,20 +8,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.GET_GAME_INIT:
-      return {
-        ...state,
-        loading: true
-      };
-    case actionTypes.GET_GAME_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        game: { ...action.payload.game },
-        success: true,
-        error: false
-      };
-    case actionTypes.GET_GAME_FAILED:
+    case actionTypes.UNFOLLOW_GAME_INIT:
+      return { ...state, loading: true };
+    case actionTypes.UNFOLLOW_GAME_SUCCESS:
+      return { ...state, loading: false, success: true, error: false };
+    case actionTypes.UNFOLLOW_GAME_FAILED:
       return {
         ...state,
         loading: false,
