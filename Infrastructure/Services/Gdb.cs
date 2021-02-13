@@ -8,6 +8,7 @@ using Application.Errors;
 using Application.Interfaces;
 using Domain.Entities.GDB;
 using Infrastructure.Options;
+using Infrastructure.Persistence;
 
 namespace Infrastructure.Services
 {
@@ -19,13 +20,15 @@ namespace Infrastructure.Services
             "f *, cover.*, genres.*, release_dates.*, involved_companies.company.*, platforms.*, game_modes.*, game_engines.*, similar_games.*, similar_games.cover.*, screenshots.*;";
 
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ApplicationDbContext _applicationDbContext;
 
         private readonly JsonSerializerOptions _options = new JsonSerializerOptions
             {PropertyNamingPolicy = new SnakeCasePropertyNamingPolicy()};
 
-        public Gdb(IHttpClientFactory httpClientFactory)
+        public Gdb(IHttpClientFactory httpClientFactory, ApplicationDbContext applicationDbContext)
         {
             _httpClientFactory = httpClientFactory;
+            _applicationDbContext = applicationDbContext;
         }
 
         private HttpClient GetClient() => _httpClientFactory.CreateClient(ClientName);
