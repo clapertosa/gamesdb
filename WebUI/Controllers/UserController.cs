@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Application.Mediatr.User.Queries;
 using Domain.DTOs;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -38,6 +39,12 @@ namespace WebUI.Controllers
         public async Task<IActionResult> GetCurrentUser()
         {
             return Ok(await _identityService.GetCurrentUserAsync());
+        }
+
+        [HttpGet("current_profile")]
+        public async Task<ActionResult<ProfileDto>> GetCurrentProfile()
+        {
+            return await Mediator.Send(new GetUserProfileQuery());
         }
 
         [AllowAnonymous]
