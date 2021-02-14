@@ -4,10 +4,10 @@ import styled from "styled-components/macro";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 
-const Container = styled(Card)`
+const CardContainer = styled(Card)`
   cursor: pointer;
   max-width: 205px;
-  height: 570px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
   margin: auto;
@@ -26,18 +26,20 @@ const Container = styled(Card)`
 const CarouselCard = ({ id, imagePath, title, genre, overview }) => {
   const history = useHistory();
   return (
-    <Container onClick={() => history.push(`/game/${id}`)}>
+    <CardContainer onClick={() => history.push(`/game/${id}`)}>
       <Card.Img variant="top" src={imagePath} />
       <Card.Body>
         <Card.Title className="text-capitalize">{title}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted text-capitalize">
-          {genre}
-        </Card.Subtitle>
+        {genre && (
+          <Card.Subtitle className="mb-2 text-muted text-capitalize">
+            {genre}
+          </Card.Subtitle>
+        )}
         <Card.Text>
           {overview.length > 100 ? `${overview.substring(0, 97)}...` : overview}
         </Card.Text>
       </Card.Body>
-    </Container>
+    </CardContainer>
   );
 };
 

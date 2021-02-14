@@ -10,6 +10,7 @@ import gameStatsReducer from "./gameStatsReducer";
 import followGameReducer from "./followGameReducer";
 import unfollowGameReducer from "./unfollowGameReducer";
 import voteGameReducer from "./voteGameReducer";
+import dashboardReducer from "./dashboardReducer";
 
 export default combineReducers({
   signIn: signInReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   gameStats: gameStatsReducer,
   followGame: followGameReducer,
   unfollowGame: unfollowGameReducer,
-  voteGame: voteGameReducer
+  voteGame: voteGameReducer,
+  dashboardGames: dashboardReducer
 });

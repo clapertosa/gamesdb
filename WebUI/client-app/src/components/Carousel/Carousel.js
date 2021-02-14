@@ -41,7 +41,6 @@ const settings = {
   arrows: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 5,
   slidesToScroll: 1,
   initialSlide: 0,
   nextArrow: <NextArrow />,
@@ -73,7 +72,7 @@ const settings = {
 
 const Carousel = ({ data }) => (
   <Container>
-    <Slider {...settings}>
+    <Slider {...settings} slidesToShow={data.length > 5 ? 5 : data.length}>
       {data.map((d, i) => (
         <div key={i}>
           <CarouselCard

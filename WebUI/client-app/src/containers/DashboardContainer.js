@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import styled from "styled-components";
+import Carousel from "../components/Carousel/Carousel";
+import SectionTitle from "../components/Sections/SectionTitle";
+import Spinner from "../components/Spinner/Spinner";
+import { getDashboardGames } from "../store/actions/dashboardActions";
 
 const Container = styled.div`
   & > div:not(:last-child) {
@@ -8,107 +12,57 @@ const Container = styled.div`
   }
 `;
 
-const AccordionHeader = styled.div`
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+const SectionContainer = styled.div``;
 
-  .icon-chevron-left {
-    transform: ${({ open }) => (open ? "rotateZ(90deg)" : "rotateZ(270deg)")};
-    transition: transform 0.3s;
-  }
-`;
+const DashboardContainer = ({ dashboardGames, isAuthenticated }) => {
+  const dispatch = useDispatch();
 
-const DashboardContainer = () => {
-  const [actives, setActives] = useState({
-    followed: 1,
-    wanted: 1,
-    played: 1
-  });
+  useEffect(() => {
+    if (isAuthenticated) dispatch(getDashboardGames());
+  }, [dispatch, isAuthenticated]);
 
-  return (
+  console.log(dashboardGames.followed);
+
+  return dashboardGames.loading ? (
+    <Spinner />
+  ) : (
     <Container>
-      <Accordion defaultActiveKey={1} activeKey={actives.followed}>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle
-              as="div"
-              variant="link"
-              eventKey={1}
-              onClick={() =>
-                setActives((prev) => ({
-                  ...prev,
-                  followed: prev.followed === 1 ? 0 : 1
-                }))
-              }
-            >
-              <AccordionHeader open={actives.followed === 1}>
-                <span>Followed</span>
-                <span className="icon-chevron-left" />
-              </AccordionHeader>
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey={actives.followed}>
-            <Card.Body>Hello! I'm the body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+      <SectionContainer>
+        <SectionTitle>Followed Games</SectionTitle>
+        <Carousel
+          data={
+            dashboardGames.followed?.map((g) => ({
+              id: g.igdbId,
+              title: g.title,
+              genre: g.genres?.map((g) => g.name).join(", "),
+              imagePath: g.coverPath?.replace("thumb", "cover_big"),
+              overview: g.description
+            })) ?? []
+          }
+        />
+      </SectionContainer>
 
-      <Accordion defaultActiveKey={1} activeKey={actives.wanted}>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle
-              as="div"
-              variant="link"
-              eventKey={1}
-              onClick={() =>
-                setActives((prev) => ({
-                  ...prev,
-                  wanted: prev.wanted === 1 ? 0 : 1
-                }))
-              }
-            >
-              <AccordionHeader open={actives.wanted === 1}>
-                <span>Wanted</span>
-                <span className="icon-chevron-left" />
-              </AccordionHeader>
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey={1}>
-            <Card.Body>Hello! I'm another body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-
-      <Accordion defaultActiveKey={1} activeKey={actives.played}>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle
-              as="div"
-              variant="link"
-              eventKey={actives.played}
-              onClick={() =>
-                setActives((prev) => ({
-                  ...prev,
-                  played: prev.played === 1 ? 0 : 1
-                }))
-              }
-            >
-              <AccordionHeader open={actives.played === 1}>
-                <span>Played</span>
-                <span className="icon-chevron-left" />
-              </AccordionHeader>
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey={actives.played}>
-            <Card.Body>Hello! I'm another body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
+      <SectionContainer>
+        <SectionTitle>Voted Games</SectionTitle>
+        <Carousel
+          data={
+            dashboardGames.voted?.map((g) => ({
+              id: g.igdbId,
+              title: g.title,
+              genre: g.genres?.map((g) => g.name).join(", "),
+              imagePath: g.coverPath?.replace("thumb", "cover_big"),
+              overview: g.description
+            })) ?? []
+          }
+        />
+      </SectionContainer>
     </Container>
   );
 };
 
-export default DashboardContainer;
+const mapStateToProps = (state) => ({
+  dashboardGames: state.dashboardGames,
+  isAuthenticated: state.user.isAuthenticated
+});
+
+export default connect(mapStateToProps)(DashboardContainer);

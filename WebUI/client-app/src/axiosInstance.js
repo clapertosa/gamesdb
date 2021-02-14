@@ -13,7 +13,11 @@ axiosInstance.interceptors.request.use(
     if (localStorage.user) {
       const { token } = JSON.parse(localStorage.user);
       // eslint-disable-next-line no-param-reassign
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      };
     }
     return config;
   },
